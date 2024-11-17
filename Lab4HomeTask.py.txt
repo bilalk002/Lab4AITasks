@@ -1,0 +1,55 @@
+from sklearn import preprocessing
+
+from sklearn.naive_bayes import GaussianNB
+
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+from sklearn.model_selection import train_test_split
+age
+age=['freshman','sophomore','junior','senior','senior','junior','freshman','sophomore','junior','senior','junior','freshman','sophomore','junior','senior']
+
+le = preprocessing.LabelEncoder()
+
+age_encoded=le.fit_transform(age)
+
+major=['engineering','humanity','computer science','business','biology','pyschology','art','music','physics','history','maths','literature','polticalscience','chemistry','philosophy']
+
+major_encoded=le.fit_transform(major)
+
+gpa=['3.5','3.0','3.8','3.2','3.9','2.8','3.6','3.0','3.5','3.1','3.9','3.4','2.9','3.7','3.3']
+
+
+gpa_encoded=le.fit_transform(gpa)
+
+extracurriculur=['yes','yes','no','yes','no','yes','no','yes','yes','no','no','yes','no','yes','yes']
+
+extracurriculur_encoded=le.fit_transform(extracurriculur)
+
+accepts_scholarship=['yes','no','yes','yes','no','yes','yes','no','yes','no','yes','yes','no','yes','no']
+
+accepts_scholarship_encoded=le.fit_transform(accepts_scholarship)
+
+features=list(zip(age_encoded,major_encoded,gpa_encoded,extracurriculur_encoded,accepts_scholarship_encoded))
+
+
+features_train, features_test,label_train,label_test=train_test_split(features, accepts_scholarship_encoded, test_size=0.2, random_state=42)
+
+model = GaussianNB()
+
+model.fit(features_train, label_train)
+
+predicted = model.predict(features_test)
+
+print("Prediction:", predicted)
+
+conf_mat = confusion_matrix(label_test, predicted)
+
+print("Confusion Matrix:")
+
+print(conf_mat)
+
+accuracy = accuracy_score(label_test, predicted)
+
+print("Accuracy:", accuracy)
+
+

@@ -1,0 +1,53 @@
+from sklearn import preprocessing
+
+from sklearn.naive_bayes import GaussianNB
+
+from sklearn.metrics import confusion_matrix, accuracy_score
+
+from sklearn.model_selection import train_test_split
+age 
+age= ['youth', 'youth', 'middle_aged', 'senior', 'senior', 'senior', 'middle_aged', 'youth', 'youth', 'senior', 'youth', 'middle_aged', 'middle_aged', 'senior']
+
+le = preprocessing.LabelEncoder()
+
+age_encoded=le.fit_transform(age)
+
+income = ['high', 'high', 'high', 'medium', 'low', 'low', 'low', 'medium', 'low', 'medium', 'medium', 'medium', 'high', 'medium']
+
+income_encoded=le.fit_transform(income)
+
+student = ['no', 'no', 'no', 'no', 'yes', 'yes', 'yes', 'no', 'yes', 'yes', 'yes', 'no', 'yes', 'no']
+
+student_encoded=le.fit_transform(student)
+
+credit_rating = ['fair', 'excellent', 'fair', 'fair', 'fair', 'excellent', 'excellent', 'fair', 'fair', 'fair', 'excellent', 'excellent', 'fair', 'excellent']
+
+credit_rating_encoded=le.fit_transform(credit_rating)
+
+buys_computer = ['no', 'no', 'yes', 'yes', 'yes', 'no', 'yes', 'no', 'yes', 'yes', 'yes', 'yes', 'yes', 'no']
+
+buys_computer_encoded=le.fit_transform(buys_computer)
+
+
+features=list(zip(age_encoded,income_encoded,student_encoded,credit_rating_encoded,buys_computer_encoded))
+
+
+features_train, features_test,label_train,label_test=train_test_split(features, buys_computer_encoded, test_size=0.2, random_state=42)
+
+model = GaussianNB()
+
+model.fit(features_train, label_train)
+
+predicted = model.predict(features_test)
+
+print("Prediction:", predicted)
+
+conf_mat = confusion_matrix(label_test, predicted)
+
+print("Confusion Matrix:")
+
+print(conf_mat)
+
+accuracy = accuracy_score(label_test, predicted)
+
+print("Accuracy:", accuracy)
